@@ -27,6 +27,11 @@
 package net.divbyzero.gpx.tests;
 
 import static org.junit.Assert.assertEquals;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import net.divbyzero.gpx.Track;
 import net.divbyzero.gpx.TrackSegment;
 
@@ -143,6 +148,44 @@ public class TrackTest {
 		track.addSegment(s2);
 		assertEquals(s1.cumulativeDescent() + s2.cumulativeDescent(), track.cumulativeDescent(), 0.0);
 		
+	}
+
+	@Test
+	public void testEndDateIsLatestDate() throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		Track track = newSegmentWithDates(format, "1/1/1980", "2/1/1980", "31/12/1979");
+		assertEquals(format.parse("2/1/1980"), track.endTime());
+	}
+
+	@Test
+	public void testStartingDateIsEarlierDate() throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		Track track = newSegmentWithDates(format, "1/1/1980", "2/1/1980", "31/12/1979");
+		assertEquals(format.parse("31/12/1979"), track.startingTime());
+	}
+
+	private Track newSegmentWithDates(SimpleDateFormat format, String... dates) throws ParseException {
+		class MockSegment extends TrackSegment {
+			Date time;
+			MockSegment(Date end){
+				this.time = end;
+			}
+			@Override
+			public Date endTime() {
+				return time;
+			}
+			@Override
+			public Date startingTime() {
+				return time;
+			}
+		}
+
+		Track track = new Track();
+		for (String date : dates) {
+			track.addSegment(new MockSegment(format.parse(date)));
+		}
+		track.addSegment(new MockSegment(null));
+		return track;
 	}
 
 }

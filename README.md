@@ -1,6 +1,7 @@
 ![maintainability](https://sonarcloud.io/api/project_badges/measure?project=lrnthbrt_jgpx&metric=sqale_rating)
 ![reliability](https://sonarcloud.io/api/project_badges/measure?project=lrnthbrt_jgpx&metric=reliability_rating)
 ![security](https://sonarcloud.io/api/project_badges/measure?project=lrnthbrt_jgpx&metric=security_rating)
+![coverage](https://sonarcloud.io/api/project_badges/measure?project=lrnthbrt_jgpx&metric=coverage)
 
 # jgpx: GPX library for Java
 
