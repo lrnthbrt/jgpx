@@ -68,6 +68,7 @@ public class TrackTest {
 	@Test
 	public void testTrackLengthIsSumOfSegmentLengths() {
 		class MockSegment extends TrackSegment {
+			@Override
 			public double length() {
 				return 100;
 			}
@@ -101,6 +102,7 @@ public class TrackTest {
 	@Test
 	public void testCumulativeAscentIsSumOfSegmetAscents() {
 		class MockSegment extends TrackSegment {
+			@Override
 			public double cumulativeAscent() {
 				return 200;
 			}
@@ -123,6 +125,7 @@ public class TrackTest {
 	@Test
 	public void testCumulativeDescentIsSumOfSegmetAscents() {
 		class MockSegment extends TrackSegment {
+			@Override
 			public double cumulativeDescent() {
 				return 300;
 			}

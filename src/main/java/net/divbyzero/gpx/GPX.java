@@ -27,6 +27,8 @@
 package net.divbyzero.gpx;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * GPX track collection
@@ -39,7 +41,7 @@ import java.util.ArrayList;
  */
 public class GPX {
 
-	protected ArrayList<Track> tracks = new ArrayList<Track>();
+	protected final ArrayList<Track> tracks = new ArrayList<>();
 	
 	/**
 	 * Adds a track to the collection.
@@ -54,11 +56,11 @@ public class GPX {
 	}
 	
 	/**
-	 * Returns the list of track that make up the collection.
+	 * Returns an unmodifiable view of the list of track that make up the collection.
 	 * 
 	 * @return a list of tracks
 	 */
-	public ArrayList<Track> getTracks() {
-		return tracks;
+	public List<Track> getTracks() {
+		return Collections.unmodifiableList(tracks);
 	}
 }

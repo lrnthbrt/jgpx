@@ -27,7 +27,9 @@
 package net.divbyzero.gpx;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A GPS track
@@ -41,7 +43,7 @@ import java.util.Date;
  */
 public class Track implements Measurable {
 
-	private ArrayList<TrackSegment> segments = new ArrayList<TrackSegment>();
+	private final ArrayList<TrackSegment> segments = new ArrayList<>();
 	
 	/**
 	 * Adds a new segment to the track.
@@ -56,7 +58,7 @@ public class Track implements Measurable {
 	}
 	
 	/**
-	 * Returns the segments of which the track consists.
+	 * Returns an unmodifiable view of the segments of which the track consists.
 	 * 
 	 * <p>This method returns a list of the segments that make up the
 	 * track. They are returned in the order that they were added,
@@ -66,8 +68,8 @@ public class Track implements Measurable {
 	 * 
 	 * @return a list of the track's segments
 	 */
-	public ArrayList<TrackSegment> getSegments() {
-		return segments;
+	public List<TrackSegment> getSegments() {
+		return Collections.unmodifiableList(segments);
 	}
 
 	/**
@@ -75,6 +77,7 @@ public class Track implements Measurable {
 	 * 
 	 * @return the tracks's length in meters
 	 */
+	@Override
 	public double length()
 	{
 		double length = 0.0;
@@ -97,6 +100,7 @@ public class Track implements Measurable {
 	 * @see Track#cumulativeDescent()
 	 * @return the tracks's total ascent in meters
 	 */
+	@Override
 	public double cumulativeAscent() {
 		double ascent = 0.0;
 		
@@ -118,6 +122,7 @@ public class Track implements Measurable {
 	 * @see Track#cumulativeAscent()
 	 * @return the tracks's total descent in meters
 	 */
+	@Override
 	public double cumulativeDescent() {
 		double descent = 0.0;
 		
@@ -137,6 +142,7 @@ public class Track implements Measurable {
 	 * @see Track#endTime()
 	 * @return the point in time when the track was entered 
 	 */
+	@Override
 	public Date startingTime() {
 		Date result = null;
 		
@@ -144,10 +150,8 @@ public class Track implements Measurable {
 			TrackSegment segment = segments.get(i);
 			Date startingTime = segment.startingTime();
 			
-			if (startingTime != null) {
-				if (result == null || startingTime.before(result)) {
-					result = startingTime;
-				}
+			if (startingTime != null && (result == null || startingTime.before(result))) {
+				result = startingTime;
 			}
 		}
 		
@@ -163,6 +167,7 @@ public class Track implements Measurable {
 	 * @see Track#startingTime
 	 * @return the point in time when the track was left
 	 */
+	@Override
 	public Date endTime() {
 		Date result = null;
 		
@@ -170,10 +175,8 @@ public class Track implements Measurable {
 			TrackSegment segment = segments.get(i);
 			Date endTime = segment.endTime();
 			
-			if (endTime != null) {
-				if (result == null || endTime.after(result)) {
-					result = endTime;
-				}
+			if (endTime != null && (result == null || endTime.after(result))) {
+				result = endTime;
 			}
 		}
 		

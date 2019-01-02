@@ -188,10 +188,12 @@ public class TrackSegmentTest {
 				this.lon = lon;
 			}
 			
+			@Override
 			public double getLatitude() {
 				return lat;
 			}
 			
+			@Override
 			public double getLongitude() {
 				return lon;
 			}
